@@ -27,7 +27,16 @@ module.exports = function(grunt) {
             {
                 level: "ok",
                 message: ""
+            }],
+            fail:[{
+                level: "warn",
+                message: ""
+            },
+            {
+                level: "fatal",
+                message: ""
             }]
+
         }
     }
     grunt.registerInitTask('say', 'Say XCommand at multi threads.', function() {
@@ -63,13 +72,10 @@ module.exports = function(grunt) {
             });
         });
 
-        grunt.util.hooker.hook(grunt,"warn", function(msg) {
-            console.log("warn:"+ msg);
-            say( msg, that );
-        });
-        grunt.util.hooker.hook(grunt,"error", function(msg) {
-            console.log("warn:"+ msg);
-            say( msg, that );
+        c.hook.fail.forEach(function(conb){
+            grunt.util.hooker.hook(grunt.fail, conb.level, function(msg) {
+                say( msg, that );
+            });
         });
 
     });
