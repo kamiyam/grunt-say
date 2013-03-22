@@ -39,7 +39,7 @@ module.exports = function(grunt) {
 
         }
     }
-    grunt.registerInitTask('say', 'Say XCommand at multi threads.', function() {
+    grunt.registerInitTask('say', 'Say XCommand on Grunt Tasking', function() {
 
         var c = grunt.util._.defaults(grunt.config('say') || {}, _default);
         var that = this;
@@ -52,16 +52,15 @@ module.exports = function(grunt) {
 
         var say =  function( msg,  grunt ){
 
-            console.log( msg );
+            //
             var message;
-
             if( typeof (msg) == 'string' ) message = msg;
             else if( typeof (msg) == 'array' ) message = msg[0];
 
             if ( message == null || ! typeof (message) == 'string' ) return;
 
-            var command = pre + message
-            console.log(command);
+            //
+            var command = pre + "'" + message.replace("'", "") + "'";
             cpp.code(command);
 
         }
